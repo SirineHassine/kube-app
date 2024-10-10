@@ -30,7 +30,7 @@ spec:
                 secretKeyRef:
                   name: app-secret
                   key: db_pass
-      nodeselector: 
+      nodeSelector: 
         zone: use-east-1a
       volumes:
         - name: vpro-db-data
