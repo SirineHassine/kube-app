@@ -4,19 +4,19 @@ metadata:
   name: vprodb
   labels:
     app: vprodb
-  
+
 spec:
   selector:
     matchLabels:
-      app: vprodb      
+      app: vprodb
   replicas: 1
   template:
     metadata:
       labels:
-        app: vprodb        
+        app: vprodb
     spec:
       containers:
-        - name: vprodb     
+        - name: vprodb
           image: sirinehassine/vprofiledb
           volumeMounts:
             - mountPath: /var/lib/mysql
@@ -24,13 +24,13 @@ spec:
           ports:
             - name : vprodb-port
               containerPort: 3306
-          env: 
+          env:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: app-secret
                   key: db-pass
-      nodeSelector: 
+      nodeSelector:
         zone: us-east-1a
       volumes:
         - name: vpro-db-data
@@ -41,9 +41,7 @@ spec:
       initContainers:
         - name: busybox
           image: busybox:latest
-          args: ["rm", "rf", "/var/lib/mysql/lost+found"]
+          args: ["rm", "-rf", "/var/lib/mysql/lost+found"]
           volumeMounts:
             - name: vpro-db-data
               mountPath: /var/lib/mysql
-
-          
